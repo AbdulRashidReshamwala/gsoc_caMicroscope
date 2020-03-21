@@ -1,0 +1,5 @@
+backend/static/uploads/*
+backend/static/datasets/*
+backend/__pycache__/
+!backend/static/uploads/.gitkeep
+!backend/static/datasets/.gitkeep
