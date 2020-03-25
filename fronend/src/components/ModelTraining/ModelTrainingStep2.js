@@ -12,7 +12,7 @@ export default function ModelTrainingStep2(props) {
   const [strideSize, setStrideSize] = useState(1);
   const [nueronSize, setNueronSize] = useState(256);
   const [activation, setActivation] = useState("relu");
-  const [layer, setLayer] = useState("dense");
+  const [layer, setLayer] = useState("conv2d");
 
   useEffect(() => tfvis.visor().open(), []);
 
@@ -21,7 +21,7 @@ export default function ModelTrainingStep2(props) {
       case "dense":
         model.add(
           tf.layers.dense({
-            units: nueronSize,
+            units: parseInt(nueronSize),
             activation: activation
           })
         );
@@ -29,9 +29,9 @@ export default function ModelTrainingStep2(props) {
       case "conv2d":
         model.add(
           tf.layers.conv2d({
-            kernelSize: kernalSize,
-            filters: filterSize,
-            strides: strideSize,
+            kernelSize: parseInt(kernalSize),
+            filters: parseInt(filterSize),
+            strides: parseInt(strideSize),
             activation: activation,
             kernelInitializer: "VarianceScaling"
           })
@@ -54,9 +54,9 @@ export default function ModelTrainingStep2(props) {
       <Form.Group controlId="exampleForm.ControlSelect1">
         <Form.Label>Select Layer</Form.Label>
         <Form.Control as="select" onChange={e => setLayer(e.target.value)}>
-          <option value="dense">Dense</option>
           <option value="conv2d">Convolution 2D</option>
           <option value="flatten">Flatten</option>
+          <option value="dense">Dense</option>
         </Form.Control>
       </Form.Group>
       {layer === "dense" ? (
@@ -66,7 +66,7 @@ export default function ModelTrainingStep2(props) {
             value={nueronSize}
             type="nmumber"
             placeholder="eg : 256"
-            onChange={e => setNueronSize(parseInt(e.target.value))}
+            onChange={e => setNueronSize(e.target.value)}
           />
         </Form.Group>
       ) : null}
@@ -78,7 +78,7 @@ export default function ModelTrainingStep2(props) {
               value={kernalSize}
               type="number"
               placeholder="eg : 256"
-              onChange={e => setKernalSize(parseInt(e.target.value))}
+              onChange={e => setKernalSize(e.target.value)}
             />
           </Form.Group>
 
@@ -88,7 +88,7 @@ export default function ModelTrainingStep2(props) {
               value={filterSize}
               type="number"
               placeholder="eg : 256"
-              onChange={e => setFilterSize(parseInt(e.target.value))}
+              onChange={e => setFilterSize(e.target.value)}
             />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
@@ -99,20 +99,25 @@ export default function ModelTrainingStep2(props) {
               placeholder="eg : 256"
               onChange={e => {
                 console.log(e.target.value);
-                setStrideSize(parseInt(e.target.value));
+                setStrideSize(e.target.value);
               }}
             />
           </Form.Group>
         </>
       ) : null}
-      <Form.Group controlId="exampleForm.ControlSelect1">
-        <Form.Label>Select Activation Layer</Form.Label>
-        <Form.Control as="select" onChange={e => setActivation(e.target.value)}>
-          <option value="relu">ReLU</option>
-          <option value="sigmoid">Sigmoid</option>
-          <option value="tanh">TanH</option>
-        </Form.Control>
-      </Form.Group>
+      {layer === "conv2d" || layer === "dense" ? (
+        <Form.Group controlId="exampleForm.ControlSelect1">
+          <Form.Label>Select Activation Layer</Form.Label>
+          <Form.Control
+            as="select"
+            onChange={e => setActivation(e.target.value)}
+          >
+            <option value="relu">ReLU</option>
+            <option value="sigmoid">Sigmoid</option>
+            <option value="tanh">TanH</option>
+          </Form.Control>
+        </Form.Group>
+      ) : null}
       <Row>
         <Button
           style={{ marginRight: "34px" }}

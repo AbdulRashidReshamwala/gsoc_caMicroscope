@@ -9,6 +9,7 @@ export default function ModelTraining() {
   const [model, setModel] = useState(null);
   const [stage, setStage] = useState(1);
   const [iLayer, setILayer] = useState(1);
+  const [inputSize, setInputSize] = useState(24);
 
   useEffect(() => tfvis.visor().close(), []);
 
@@ -20,6 +21,8 @@ export default function ModelTraining() {
           model={model}
           setModel={setModel}
           setStage={setStage}
+          inputSize={inputSize}
+          setInputSize={setInputSize}
         />
       );
       break;
@@ -33,7 +36,13 @@ export default function ModelTraining() {
       );
       break;
     case 3:
-      s = <ModelTrainingStep3 model={model} setModel={setModel} />;
+      s = (
+        <ModelTrainingStep3
+          model={model}
+          setModel={setModel}
+          inputSize={inputSize}
+        />
+      );
       break;
     default:
       s = <h1>Error</h1>;
@@ -43,7 +52,15 @@ export default function ModelTraining() {
     <>
       <br />
       <h1>Model Builder</h1>
-      <h6>Press '~' on your keyboard to toggle model info</h6>
+      <h6>
+        Press '~' on your keyboard or click
+        <span
+          style={{ color: "red", cursor: "grab", paddingLeft: "1rem" }}
+          onClick={() => tfvis.visor().toggle()}
+        >
+          here to toggle model info
+        </span>
+      </h6>
       {stage > 1 ? (
         <>
           <Button

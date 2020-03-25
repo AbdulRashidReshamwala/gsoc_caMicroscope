@@ -16,6 +16,20 @@ function App() {
           </TabList>
 
           <TabPanel>
+            <h4>
+              Requries Backend images may error out on hosted version due to
+              heroku shutting down the dyno
+            </h4>
+            <h4>
+              Please{" "}
+              <a
+                href="https://afternoon-plains-91928.herokuapp.com/dataset/all"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                click here and refresh page
+              </a>
+            </h4>
             <DatasetView />
           </TabPanel>
           <TabPanel>

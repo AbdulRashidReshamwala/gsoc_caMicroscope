@@ -10,7 +10,7 @@ export default function DatasetView() {
 
   useEffect(() => {
     axios
-      .get("http://0.0.0.0:5000/dataset/all")
+      .get("https://afternoon-plains-91928.herokuapp.com/dataset/all")
       .then(res => setAllDataset(res.data.datasets))
       .catch(err => alert(err));
   }, []);
@@ -18,7 +18,9 @@ export default function DatasetView() {
   useEffect(() => {
     selectedDataset
       ? axios
-          .get(`http://0.0.0.0:5000/dataset/view/${selectedDataset}`)
+          .get(
+            `https://afternoon-plains-91928.herokuapp.com/dataset/view/${selectedDataset}`
+          )
           .then(res => setSelectedDatasetData(res.data))
       : console.log("select a datset");
   }, [selectedDataset]);

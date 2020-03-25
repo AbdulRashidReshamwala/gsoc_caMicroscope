@@ -7,13 +7,14 @@ export default function ModelTrainingStep1(props) {
   let m = props.model;
   let sM = props.setModel;
   let sS = props.setStage;
-  const [inputSize, setInputSize] = useState(24);
+  const inputSize = props.inputSize;
+  const setInputSize = props.setInputSize;
   const [filterSize, setFilterSize] = useState(8);
   const [kernalSize, setKernalSize] = useState(5);
   const [strideSize, setStrideSize] = useState(1);
   const [nueronSize, setNueronSize] = useState(256);
   const [activation, setActivation] = useState("relu");
-  const [layer, setLayer] = useState("dense");
+  const [layer, setLayer] = useState("conv2d");
 
   function createModel(inputSize, channels, l, image) {
     let inputShape;
@@ -29,7 +30,7 @@ export default function ModelTrainingStep1(props) {
         model.add(
           tf.layers.dense({
             inputShape: inputShape,
-            units: nueronSize,
+            units: parseInt(nueronSize),
             activation: activation
           })
         );
@@ -38,9 +39,9 @@ export default function ModelTrainingStep1(props) {
         model.add(
           tf.layers.conv2d({
             inputShape: inputShape,
-            kernelSize: kernalSize,
-            filters: filterSize,
-            strides: strideSize,
+            kernelSize: parseInt(kernalSize),
+            filters: parseInt(filterSize),
+            strides: parseInt(strideSize),
             activation: activation,
             kernelInitializer: "VarianceScaling"
           })
@@ -69,8 +70,8 @@ export default function ModelTrainingStep1(props) {
       <Form.Group controlId="exampleForm.ControlSelect1">
         <Form.Label>Select Layer</Form.Label>
         <Form.Control as="select" onChange={e => setLayer(e.target.value)}>
-          <option value="dense">Dense</option>
           <option value="conv2d">Convolution 2D</option>
+          <option value="dense">Dense</option>
         </Form.Control>
       </Form.Group>
       {layer === "dense" ? (
@@ -113,12 +114,13 @@ export default function ModelTrainingStep1(props) {
               placeholder="eg : 256"
               onChange={e => {
                 console.log(e.target.value);
-                setStrideSize(parseInt(e.target.value));
+                setStrideSize(e.target.value);
               }}
             />
           </Form.Group>
         </>
       ) : null}
+
       <Form.Group controlId="exampleForm.ControlSelect1">
         <Form.Label>Select Activation Layer</Form.Label>
         <Form.Control as="select" onChange={e => setActivation(e.target.value)}>

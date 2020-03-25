@@ -4,8 +4,10 @@ from zipfile import ZipFile
 from dbutility import Dataset, Model, engine
 from sqlalchemy.orm import sessionmaker
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 Session = sessionmaker(bind=engine)
 
 

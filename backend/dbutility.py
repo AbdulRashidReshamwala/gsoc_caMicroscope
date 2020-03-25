@@ -3,11 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from sqlalchemy.pool import SingletonThreadPool
 
+engine = create_engine('sqlite:///test.db', echo=True,)
 
-Base = declarative_base()
-
-engine = create_engine('sqlite:///test.db', echo=True,
-                       poolclass=SingletonThreadPool)
+Base = declarative_base(bind=engine)
 
 
 class Dataset(Base):

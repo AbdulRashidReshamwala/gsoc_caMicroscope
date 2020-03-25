@@ -8,11 +8,13 @@ export default function DatasetItemView(props) {
         style={{ height: "200px" }}
         fluid
         variant="top"
-        src={`http://0.0.0.0:5000/static/datasets/${props.dataset}/${props.category}/${props.imgName}`}
+        src={`https://afternoon-plains-91928.herokuapp.com/static/datasets/${props.dataset}/${props.category}/${props.imgName}`}
       />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Button variant="primary">Go somewhere</Button>
+        <Card.Title>{props.imgName}</Card.Title>
+        <Button variant="primary" onClick={() => alert("//TODO..")}>
+          Open Editor
+        </Button>
       </Card.Body>
     </Card>
   );
